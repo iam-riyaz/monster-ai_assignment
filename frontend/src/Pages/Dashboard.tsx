@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { signOut, useSessionContext } from 'supertokens-auth-react/recipe/session';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ImageUploadComponent from '../components/ImageUploadComponent';
 import  Navbar  from '../components/Navbar';
+import ImageGrid from '../components/ImageGrid';
 
 function Dashboard(props: { userId: string }) {
 
+  const [needReload,setNeedReload]= useState(false)
   let userId = props.userId;
   const navigate= useNavigate()
 
@@ -38,9 +40,11 @@ function Dashboard(props: { userId: string }) {
   return (
     <div>
       
-      <div className=''>
+      <div className='flex flex-col gap-3'>
 
-        <ImageUploadComponent userId={userId}/>
+        <ImageUploadComponent updateNeedReload={()=>setNeedReload((pre)=>!pre)}    userId={userId}/>
+        <ImageGrid  needReload={needReload} userId={userId}/>
+
       </div>
       </div>
   )

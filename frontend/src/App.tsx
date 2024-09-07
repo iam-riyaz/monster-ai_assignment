@@ -6,6 +6,7 @@ import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./Home";
 import { PreBuiltUIList, SuperTokensConfig, ComponentWrapper } from "./config";
 import Dashboard from "./Pages/Dashboard";
+import SingleImage from "./Pages/SingleImage";
 
 SuperTokens.init(SuperTokensConfig);
 
@@ -31,17 +32,17 @@ function App() {
                                         </SessionAuth>
                                     }
                                 />
-                                {/* <Route path="/"
+                                <Route path="post/:id"
                                 
                                 element={
                                     <SessionAuth>
-                                        <Dashboard/>
+                                        < SingleImage/>
                                     </SessionAuth>
                                 }
                                 >
 
 
-                                </Route> */}
+                                </Route>
                             </Routes>
                         </div>
                     </Router>

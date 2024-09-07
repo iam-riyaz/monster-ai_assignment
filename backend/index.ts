@@ -102,13 +102,14 @@ app.post(
   }
 );
 
-app.get("/images",verifySession(), async (req:SessionRequest, res:Response) => {
+app.post("/images/getall",verifySession(), async (req:SessionRequest, res:Response) => {
 
     try{
 
-        const { userId } = req.body;
+        const { userId } =  req.body;
 
-        const posts= Post.find({userId})
+        const posts= await Post.find({userId})
+
         
         res.status(200).send({
             status: true,
@@ -118,6 +119,7 @@ app.get("/images",verifySession(), async (req:SessionRequest, res:Response) => {
     }
     catch(err){
         res.status(500).send(err);
+        console.log(err)
     }
 
 
@@ -127,14 +129,12 @@ app.get("/images/:id", async (req, res) => {
 
     try{
         const {id} =req.params
-     const post= Post.findById(id)
-    
-
+     const post= await Post.findById(id)
+     
          res.status(200).send({
             status: true,
             data: { post },
           })
-     
     }
     catch(err){
         res.status(500).send(err);

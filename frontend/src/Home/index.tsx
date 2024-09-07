@@ -1,6 +1,8 @@
 import SuccessView from "./SuccessView";
 import { useSessionContext } from "supertokens-auth-react/recipe/session";
 import "./Home.css";
+import Dashboard from "../Pages/Dashboard";
+import  Navbar  from '../components/Navbar';
 
 export default function Home() {
     const sessionContext = useSessionContext();
@@ -11,7 +13,9 @@ export default function Home() {
 
     return (
         <div className="fill" id="home-container">
-            <SuccessView userId={sessionContext.userId} />
+            <Navbar/>
+            {/* <SuccessView userId={sessionContext.userId} /> */}
+            <Dashboard userId={sessionContext.userId} />
         </div>
     );
 }

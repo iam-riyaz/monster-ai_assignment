@@ -14,6 +14,7 @@ function App() {
         <SuperTokensWrapper>
             <ComponentWrapper>
                 <div className="App app-container">
+                    
                     <Router>
                         <div className="fill">
                             <Routes>
@@ -23,16 +24,14 @@ function App() {
                                 <Route
                                     path="/"
                                     element={
-                                        /* This protects the "/" route so that it shows
-                                    <Home /> only if the user is logged in.
-                                    Else it redirects the user to "/auth" */
+                                   
                                         <SessionAuth>
                                             <Home />
                                             
                                         </SessionAuth>
                                     }
                                 />
-                                <Route path="/dashboard"
+                                {/* <Route path="/"
                                 
                                 element={
                                     <SessionAuth>
@@ -42,7 +41,7 @@ function App() {
                                 >
 
 
-                                </Route>
+                                </Route> */}
                             </Routes>
                         </div>
                     </Router>

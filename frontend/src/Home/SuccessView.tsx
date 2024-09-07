@@ -16,8 +16,8 @@ export default function SuccessView(props: { userId: string }) {
     const navigate = useNavigate();
 
     async function logoutClicked() {
-        await signOut();
-        navigate("/auth");
+            await signOut();
+            navigate("/auth");
     }
 
     function openLink(url: string) {

@@ -7,7 +7,7 @@ import React from "react";
 
 export function getApiDomain() {
     const apiPort = process.env.REACT_APP_API_PORT || 3001;
-    const apiUrl = process.env.REACT_APP_API_URL || `http://localhost:${apiPort}`;
+    const apiUrl = process.env.REACT_APP_API_URL || "" ;
     return apiUrl;
 }
 
@@ -16,6 +16,7 @@ export function getWebsiteDomain() {
     const websiteUrl = process.env.REACT_APP_WEBSITE_URL || `http://localhost:${websitePort}`;
     return websiteUrl;
 }
+console.log(getApiDomain())
 
 export const SuperTokensConfig = {
     appInfo: {

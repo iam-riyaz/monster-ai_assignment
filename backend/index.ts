@@ -1,4 +1,3 @@
-import multer from "multer";
 import express, { Request, Response } from "express";
 import cors from "cors";
 import supertokens from "supertokens-node";
@@ -13,9 +12,7 @@ import Multitenancy from "supertokens-node/recipe/multitenancy";
 import dotenv from "dotenv";
 import { connectDB } from "./config/database.config";
 import { User } from "./models/user.model";
-import { fileURLToPath } from "url";
-import path from "path";
-import helmet from "helmet";
+
 import { Post } from "./models/post.model";
 
 supertokens.init(SuperTokensConfig);
@@ -36,18 +33,6 @@ app.use(
 app.use(middleware());
 app.use(express.json());
 
-// // configuration------
-// // const __filename = fileURLToPath("");
-// // const __dirname = path.dirname(__filename);
-
-// app.use(express.json({ limit: "30mb",  }));
-// app.use(express.urlencoded({ limit: "30mb", extended: true }));
-// app.use(helmet());
-// app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
-
-// app.use(cors());
-// app.use("/assets", express.static(path.join(__dirname, "public/assets")));
-// app.use(express.static("public"));
 
 // An example API that requires session verification
 app.get("/sessioninfo", verifySession(), async (req: SessionRequest, res) => {

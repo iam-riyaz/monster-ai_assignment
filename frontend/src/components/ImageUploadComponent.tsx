@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { XCircleIcon } from '@heroicons/react/24/outline';
+import { firebaseStorage } from "../config/firebase.config.js"
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-function ImageUploadComponent() {
-  const [selectedFile, setSelectedFile] = useState(null);
+function ImageUploadComponent(props: { userId: string }) {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [error, setError] = useState('');
   const [preview, setPreview] = useState('');
 
+  
+  let userId = props.userId;
   const validateFile = (file:any) => {
     if(file){
-        const validTypes = ['image/jpeg', 'image/png'];
+        const validTypes = ['image/jpeg', 'image/png' ,"image/png"];
         const maxSize = 2 * 1024 * 1024; // 2MB
     
         if (!validTypes.includes(file?.type)) {
@@ -74,15 +78,32 @@ function ImageUploadComponent() {
     }
 
     const formData = new FormData();
-    formData.append('file', selectedFile);
-
+    formData.append('picture', selectedFile);
+    console.log({selectedFile})
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/upload`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
+
+            // To Upload image to firebase storage----------
+      const pictureData = selectedFile; 
+      const fileName = pictureData?.name
+      const storageRef = ref(firebaseStorage, `/monster-ai/${Date.now()}-`+fileName);
+      const uploadBtyesVariable = await uploadBytes(storageRef, pictureData);
+      const downloadUrl = await getDownloadURL(uploadBtyesVariable.ref);
+      // -------
+    //   console.log({downloadUrl})
+
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/images`, {userId,imagePath:downloadUrl});
       console.log('File uploaded successfully:', response.data);
+   
+   if(response)
+    {
+        alert("added file successfully")
+        setSelectedFile(null)
+        setPreview("")
+        setError("")
+    } 
+
     } catch (err) {
-      console.error('Error uploading file:', err);
+      alert('Error uploading file:');
     }
   };
 

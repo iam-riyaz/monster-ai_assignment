@@ -40,7 +40,7 @@ function Dashboard(props: { userId: string }) {
       
       <div className=''>
 
-        <ImageUploadComponent/>
+        <ImageUploadComponent userId={userId}/>
       </div>
       </div>
   )

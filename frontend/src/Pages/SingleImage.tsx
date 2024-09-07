@@ -18,8 +18,27 @@ function SingleImage() {
 
         }
         catch(err){
+             console.log(err)
+        }
+    }
+
+    const deleteImage= async()=>{
+        try{
+
+            const data= await axios.delete(`${process.env.REACT_APP_API_URL}/images/${id}`)
+         
+           if(data)
+           {
+            alert("Image is deleted successfully")
+            navigate("/")
+           }
+            
 
         }
+        catch(err){
+             console.log(err)
+        }
+
     }
 
     useEffect(()=>{
@@ -36,6 +55,11 @@ function SingleImage() {
             <button onClick={()=>{
                 navigate("/")
             }} className='my-4 py-2 px-4 bg-gray-800 text-white font-semibold rounded-xl'>Back</button>
+            <button
+            onClick={deleteImage}
+             className='my-4 py-2 px-4 mx-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl'>
+                Delete
+            </button>
             <div className=' w-full flex justify-center border rounded-lg'>
             <img src={imageUrl}  alt="image" className='w-full rounded-xl' />
             </div>

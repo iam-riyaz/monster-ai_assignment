@@ -102,46 +102,54 @@ app.post(
   }
 );
 
-app.post("/images/getall",verifySession(), async (req:SessionRequest, res:Response) => {
+app.post(
+  "/images/getall",
+  verifySession(),
+  async (req: SessionRequest, res: Response) => {
+    try {
+      const { userId } = req.body;
 
-    try{
+      const posts = await Post.find({ userId });
 
-        const { userId } =  req.body;
+      res.status(200).send({
+        status: true,
+        data: { posts },
+      });
+    } catch (err) {
+      res.status(500).send(err);
+      console.log(err);
+    }
+  }
+);
 
-        const posts= await Post.find({userId})
+app.get("/images/:id",verifySession(), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findById(id);
 
-        
+    res.status(200).send({
+      status: true,
+      data: { post },
+    });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.delete("/images/:id",verifySession(), async (req,res)=>{
+
+    try {
+        const { id } = req.params;
+        const post = await Post.findByIdAndDelete(id);
         res.status(200).send({
-            status: true,
-            data: { posts },
-          })
-
-    }
-    catch(err){
+          status: true,
+          data: { post },
+        });
+      } catch (err) {
         res.status(500).send(err);
-        console.log(err)
-    }
+      }
 
-
-});
-
-app.get("/images/:id", async (req, res) => {
-
-    try{
-        const {id} =req.params
-     const post= await Post.findById(id)
-     
-         res.status(200).send({
-            status: true,
-            data: { post },
-          })
-    }
-    catch(err){
-        res.status(500).send(err);
-    }
-
-});
-
+})
 
 // In case of session related errors, this error handler
 // returns 401 to the client.
